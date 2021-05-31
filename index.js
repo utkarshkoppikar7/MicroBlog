@@ -87,7 +87,7 @@ app.post('/users',(req,res) => {
     .catch((err) => {
       console.log(err);
     });
-}).listen(5000);
+}).listen(process.env.PORT || 5000)
 
 // Posts
 app.post('/addPost', (req,res) => {
