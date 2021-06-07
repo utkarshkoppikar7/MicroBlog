@@ -7,9 +7,10 @@ const Post = require('./models/posts');
 const cors = require('cors');
 
 class postC{
-  constructor(username,content){
+  constructor(username,content,image){
     this.username = username;
     this.content = content;
+    this.image =image;
   }
 }
 var postFeed = [];
@@ -87,7 +88,7 @@ app.post('/users',(req,res) => {
     .catch((err) => {
       console.log(err);
     });
-}).listen(process.env.PORT || 5000)
+}).listen(5000);
 
 // Posts
 app.post('/addPost', (req,res) => {
@@ -98,11 +99,13 @@ app.post('/addPost', (req,res) => {
   const data = JSON.parse(keys[0]);
 
   const uname1 = data.username;
-  const content1 = data.content;    
+  const content1 = data.content;
+  const img = data.image;    
   const post = new Post(
         {
           username: uname1,
-          content: content1
+          content: content1,
+          image: img
         }
       );
       
@@ -126,7 +129,7 @@ app.get('/getPosts', (req,res) => {
     .then((result) => {
       postFeed = []
       for(let i=0;i<result.length;i++){
-        postFeed.push(new postC(result[i].username,result[i].content));
+        postFeed.push(new postC(result[i].username,result[i].content,result[i].image));
       }
       res.send(postFeed);
     })
